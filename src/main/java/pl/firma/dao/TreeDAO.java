@@ -9,6 +9,7 @@ public interface TreeDAO {
 	public void addTree(Tree tree);
 	public void updateTree(Tree tree);
 	public Tree getTree(int id);
+	public boolean checkIfHaveChildren(int id);
 	public void deleteTree(int id);
 	public List<Tree> getTrees();
 

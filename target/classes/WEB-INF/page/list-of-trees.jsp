@@ -12,31 +12,10 @@
 </head>
 <body>
 <h1>Hierarchia</h1>
-<table border="1px" cellpadding="0" cellspacing="0" >
-<thead>
-<tr>
-<th width="10%">id</th><th width="15%">Nazwa</th><th width="10%">Dział</th><th width="10%">Level</th><th width="10%">Opcje</th>
-</tr>
-</thead>
-<tbody>
-<c:forEach var="tree" items="${trees}">
-<tr>
-	<td>${tree.id}</td>
-	<td>${tree.nazwa}</td>
-	<td>${tree.numerid}</td>
-	<td>${tree.level}</td>
-	<td>
-	<a href="${pageContext.request.contextPath}/tree/edit/${tree.id}.html">Edytuj</a><br/>
-	<a href="${pageContext.request.contextPath}/tree/delete/${tree.id}.html">Usuń</a><br/>
-	</td>
-</tr>
-</c:forEach>
-</tbody>
-</table>
 
 <c:forEach var="tree" items="${trees}">
-	[&nbsp;<a href="${pageContext.request.contextPath}/tree/edit/${tree.id}.html">Edytuj</a>&nbsp;/&nbsp;
-	<a href="${pageContext.request.contextPath}/tree/delete/${tree.id}.html">Usuń</a>&nbsp;]
+	[<a href="${pageContext.request.contextPath}/tree/edit/${tree.id}.html">Edytuj</a>/
+	<a href="${pageContext.request.contextPath}/tree/delete/${tree.id}.html">Usuń</a>]
 	<c:forEach var="i" begin="1" end="${tree.level}">
 	&nbsp;&nbsp;&nbsp;
 	</c:forEach>

@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <?xml version="1.0" encoding="UTF-8" ?>
 
@@ -22,11 +23,11 @@
 		<td><form:input path="nazwa" /></td>
 	</tr>
 	<tr>
-		<td>Dział matka:</td>
+		<td>Dział do którego przynależy:</td>
 		<td><form:input path="numerid" /></td>
 	</tr>
 	<tr>
-		<td><input type="submit" value="Edit" /></td>
+		<td><input type="submit" value="Edytuj" /></td>
 		<td></td>
 	</tr>
 </tbody>

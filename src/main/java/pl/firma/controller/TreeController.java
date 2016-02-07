@@ -23,6 +23,8 @@ public class TreeController {
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public ModelAndView addTreePage() {
 		ModelAndView modelAndView = new ModelAndView("add-tree-form");
+		List<Tree> trees = treeService.getTrees();
+		modelAndView.addObject("trees", trees);
 		modelAndView.addObject("tree", new Tree());
 		return modelAndView;
 	}
@@ -61,8 +63,12 @@ public class TreeController {
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
 	public ModelAndView editTreePage(@PathVariable Integer id) {
 		ModelAndView modelAndView = new ModelAndView("edit-tree-form");
+		//List<Tree> trees = treeService.getTrees();
 		Tree tree = treeService.getTree(id);
 		modelAndView.addObject("tree",tree);
+		//modelAndView.addObject("trees", trees);
+		
+		
 		return modelAndView;
 	}
 	
@@ -82,6 +88,17 @@ public class TreeController {
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteTree(@PathVariable Integer id) {
 		ModelAndView modelAndView = new ModelAndView("home");
+		Tree treeToDelete = treeService.getTree(id);
+		if (treeToDelete == null) {
+			String message = "Tree of id " + id + " do no exists";
+			modelAndView.addObject("message", message);
+			return modelAndView;
+		}
+		if (treeService.checkIfHaveChildren(id)) {
+			String message = "Dzial " + treeToDelete.getNazwa() + " nie mo¿e zostaæ usuniêty, poniewa¿ ma poddzia³y.";
+			modelAndView.addObject("message", message);
+			return modelAndView;
+		}
 		treeService.deleteTree(id);
 		String message = "Tree was successfully deleted.";
 		modelAndView.addObject("message", message);

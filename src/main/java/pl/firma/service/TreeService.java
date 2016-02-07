@@ -11,5 +11,5 @@ public interface TreeService {
 	public Tree getTree(int id);
 	public void deleteTree(int id);
 	public List<Tree> getTrees();
-
+	public boolean checkIfHaveChildren(int id);
 }

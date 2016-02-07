@@ -37,5 +37,9 @@ public class TreeServiceImpl implements TreeService {
 	public List<Tree> getTrees() {
 		return treeDAO.getTrees();
 	}
+	public boolean checkIfHaveChildren(int id)
+	{
+		return treeDAO.checkIfHaveChildren(id);
+	}
 
 }

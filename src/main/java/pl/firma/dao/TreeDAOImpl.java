@@ -55,6 +55,12 @@ public class TreeDAOImpl implements TreeDAO {
 			getCurrentSession().delete(tree);
 	}
 	
+	public boolean checkIfHaveChildren(int id)
+	{
+		boolean isListEmpty = getCurrentSession().createQuery("from Tree where numerid=" + id).list().isEmpty();
+		return !isListEmpty;
+	}
+	
 	//private final String QUERY = "SELECT t1.nazwa AS lev1, t2.nazwa as lev2, t3.nazwa as lev3, t4.nazwa as lev4 FROM trees AS t1 LEFT JOIN trees AS t2 ON t2.numerid = t1.id LEFT JOIN trees AS t3 ON t3.numerid = t2.id LEFT JOIN trees AS t4 ON t4.numerid = t3.id WHERE t1.nazwa = 'Firma' ORDER BY t1.nazwa,t2.nazwa,t3.nazwa,t4.nazwa";
 	@SuppressWarnings("unchecked")
 	public List<Tree> getTrees() {
