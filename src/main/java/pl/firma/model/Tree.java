@@ -15,6 +15,16 @@ public class Tree {
 	private String nazwa;
 	
 	private Integer numerid;
+	
+	private Integer level;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 
 	public Integer getId() {
 		return id;

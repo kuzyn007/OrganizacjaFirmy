@@ -31,6 +31,15 @@ public class TreeController {
 	public ModelAndView addingTree(@ModelAttribute Tree tree) {
 		
 		ModelAndView modelAndView = new ModelAndView("home");
+		int idDoSprawdzenia = tree.getNumerid();
+		Tree treeRodzic = treeService.getTree(idDoSprawdzenia);
+		if (treeRodzic == null) {
+			String message = "Podany ID rodzica nie istnieje.";
+			modelAndView.addObject("message", message);
+			
+			return modelAndView;
+		}
+		tree.setLevel(treeRodzic.getLevel() + 1);
 		treeService.addTree(tree);
 		
 		String message = "Tree was successfully added.";
