@@ -19,14 +19,14 @@
 <tbody>
 	<tr>
 		<td>Nazwa działu:</td>
-		<td><form:input path="nazwa" /></td>
+		<td><form:input path="name" /></td>
 	</tr>
 	<tr>
 		<td>Dział do którego przynależy:</td>
 		<td>
-			<select name="numerid">
+			<select name="numberid">
 			<c:forEach var="singleTree" items="${trees}">
-			  <option value="${singleTree.id}">${singleTree.nazwa}</option>
+			  <option value="${singleTree.id}">${singleTree.name}</option>
 			</c:forEach>
 			</select>
 		</td>

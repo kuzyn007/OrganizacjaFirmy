@@ -19,7 +19,7 @@
 	<c:forEach var="i" begin="1" end="${tree.level}">
 	&nbsp;&nbsp;&nbsp;
 	</c:forEach>
-	-&nbsp;${tree.nazwa} 
+	-&nbsp;${tree.name} 
 	<br />
 </c:forEach>
 

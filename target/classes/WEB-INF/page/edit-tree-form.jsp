@@ -20,11 +20,11 @@
 <tbody>
 	<tr>
 		<td>Nazwa działu:</td>
-		<td><form:input path="nazwa" /></td>
+		<td><form:input path="name" /></td>
 	</tr>
 	<tr>
 		<td>Dział do którego przynależy:</td>
-		<td><form:input path="numerid" /></td>
+		<td><form:input path="numberid" /></td>
 	</tr>
 	<tr>
 		<td><input type="submit" value="Edytuj" /></td>

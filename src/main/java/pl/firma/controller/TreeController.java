@@ -33,18 +33,18 @@ public class TreeController {
 	public ModelAndView addingTree(@ModelAttribute Tree tree) {
 		
 		ModelAndView modelAndView = new ModelAndView("home");
-		int idDoSprawdzenia = tree.getNumerid();
-		Tree treeRodzic = treeService.getTree(idDoSprawdzenia);
-		if (treeRodzic == null) {
+		int idDoSprawdzenia = tree.getNumberid();
+		Tree treeParent = treeService.getTree(idDoSprawdzenia);
+		if (treeParent == null) {
 			String message = "Podany ID rodzica nie istnieje.";
 			modelAndView.addObject("message", message);
 			
 			return modelAndView;
 		}
-		tree.setLevel(treeRodzic.getLevel() + 1);
+		tree.setLevel(treeParent.getLevel() + 1);
 		treeService.addTree(tree);
 		
-		String message = "Tree was successfully added.";
+		String message = "Dzia³ zosta³ poprawnie dodany.";
 		modelAndView.addObject("message", message);
 		
 		return modelAndView;
@@ -79,7 +79,7 @@ public class TreeController {
 		
 		treeService.updateTree(tree);
 		
-		String message = "Tree was successfully edited.";
+		String message = "Dzia³ zosta³ poprawnie zedytowany.";
 		modelAndView.addObject("message", message);
 		
 		return modelAndView;
@@ -90,17 +90,17 @@ public class TreeController {
 		ModelAndView modelAndView = new ModelAndView("home");
 		Tree treeToDelete = treeService.getTree(id);
 		if (treeToDelete == null) {
-			String message = "Tree of id " + id + " do no exists";
+			String message = "Dzia³ o id " + id + " nie istnieje";
 			modelAndView.addObject("message", message);
 			return modelAndView;
 		}
 		if (treeService.checkIfHaveChildren(id)) {
-			String message = "Dzial " + treeToDelete.getNazwa() + " nie mo¿e zostaæ usuniêty, poniewa¿ ma poddzia³y.";
+			String message = "Dzial " + treeToDelete.getName() + " nie mo¿e zostaæ usuniêty, poniewa¿ ma poddzia³y.";
 			modelAndView.addObject("message", message);
 			return modelAndView;
 		}
 		treeService.deleteTree(id);
-		String message = "Tree was successfully deleted.";
+		String message = "Dzia³ zosta³ poprawnie usuniêty.";
 		modelAndView.addObject("message", message);
 		return modelAndView;
 	}

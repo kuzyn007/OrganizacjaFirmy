@@ -13,11 +13,11 @@ import pl.firma.model.Tree;
 class TreeNameComparator implements Comparator<Tree> {
     @Override
     public int compare(Tree o1, Tree o2) {
-    	if (o1.getNumerid() != o2.getNumerid()) {
-    		return o1.getNumerid().compareTo(o2.getNumerid());
+    	if (o1.getNumberid() != o2.getNumberid()) {
+    		return o1.getNumberid().compareTo(o2.getNumberid());
     	}
     	else {
-    		return o2.getNazwa().compareTo(o1.getNazwa());
+    		return o2.getName().compareTo(o1.getName());
     	}
     }
 }
@@ -38,8 +38,8 @@ public class TreeDAOImpl implements TreeDAO {
 
 	public void updateTree(Tree tree) {
 		Tree treeToUpdate = getTree(tree.getId());
-		treeToUpdate.setNazwa(tree.getNazwa());
-		treeToUpdate.setNumerid(tree.getNumerid());
+		treeToUpdate.setName(tree.getName());
+		treeToUpdate.setNumberid(tree.getNumberid());
 		getCurrentSession().update(treeToUpdate);
 		
 	}
@@ -57,32 +57,31 @@ public class TreeDAOImpl implements TreeDAO {
 	
 	public boolean checkIfHaveChildren(int id)
 	{
-		boolean isListEmpty = getCurrentSession().createQuery("from Tree where numerid=" + id).list().isEmpty();
+		boolean isListEmpty = getCurrentSession().createQuery("from Tree where numberid=" + id).list().isEmpty();
 		return !isListEmpty;
 	}
 	
-	//private final String QUERY = "SELECT t1.nazwa AS lev1, t2.nazwa as lev2, t3.nazwa as lev3, t4.nazwa as lev4 FROM trees AS t1 LEFT JOIN trees AS t2 ON t2.numerid = t1.id LEFT JOIN trees AS t3 ON t3.numerid = t2.id LEFT JOIN trees AS t4 ON t4.numerid = t3.id WHERE t1.nazwa = 'Firma' ORDER BY t1.nazwa,t2.nazwa,t3.nazwa,t4.nazwa";
 	@SuppressWarnings("unchecked")
 	public List<Tree> getTrees() {
 		List<Tree> lista = getCurrentSession().createQuery("from Tree").list();
 		Collections.sort(lista, new TreeNameComparator());
 		
 		
-		List<Tree> listaPomocnicza = new LinkedList<Tree>();
+		List<Tree> helpList = new LinkedList<Tree>();
 		
 		for(int i=0; i<lista.size(); i++) {
-			if(lista.get(i).getNumerid() == 0)
+			if(lista.get(i).getNumberid() == 0)
 			{
-				listaPomocnicza.add(lista.get(i));
+				helpList.add(lista.get(i));
 				continue;
 			}
 			
-			int parentNumberId = lista.get(i).getNumerid();
-			for (int j = 0 ; j < listaPomocnicza.size(); j++)
+			int parentNumberId = lista.get(i).getNumberid();
+			for (int j = 0 ; j < helpList.size(); j++)
 			{
-				if (listaPomocnicza.get(j).getId() == parentNumberId)
+				if (helpList.get(j).getId() == parentNumberId)
 				{
-					listaPomocnicza.add(j + 1, lista.get(i));
+					helpList.add(j + 1, lista.get(i));
 					break;
 				}
 			}
@@ -90,6 +89,6 @@ public class TreeDAOImpl implements TreeDAO {
 	
 		
 		
-		return listaPomocnicza;
+		return helpList;
 	}
 }

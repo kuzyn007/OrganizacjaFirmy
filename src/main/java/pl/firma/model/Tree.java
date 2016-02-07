@@ -12,9 +12,9 @@ public class Tree {
 	@GeneratedValue
 	private Integer id;
 	
-	private String nazwa;
+	private String name;
 	
-	private Integer numerid;
+	private Integer numberid;
 	
 	private Integer level;
 
@@ -34,19 +34,19 @@ public class Tree {
 		this.id = id;
 	}
 
-	public String getNazwa() {
-		return nazwa;
+	public String getName() {
+		return name;
 	}
 
-	public void setNazwa(String nazwa) {
-		this.nazwa = nazwa;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Integer getNumerid() {
-		return numerid;
+	public Integer getNumberid() {
+		return numberid;
 	}
 
-	public void setNumerid(Integer numerid) {
-		this.numerid = numerid;
+	public void setNumberid(Integer numberid) {
+		this.numberid = numberid;
 	}
 }
