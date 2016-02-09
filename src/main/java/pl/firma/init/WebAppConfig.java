@@ -4,6 +4,8 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,13 +19,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.*;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Configuration
 @ComponentScan("pl.firma")
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-public class WebAppConfig {
+public class WebAppConfig extends WebMvcConfigurerAdapter {
 	
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
     private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
@@ -36,6 +46,14 @@ public class WebAppConfig {
     
 	@Resource
 	private Environment env;
+	
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+		builder.indentOutput(true).dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+		converters.add(new MappingJackson2XmlHttpMessageConverter(builder.createXmlMapper(true).build()));
+	}
 	
 	@Bean
 	public DataSource dataSource() {

@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.BeanNameViewResolver;
+import org.springframework.stereotype.Controller;
 
 import pl.firma.model.Tree;
 import pl.firma.service.TreeService;
 
-@RestController
+@Controller
 @RequestMapping(value="/tree")
 public class TreeController {
 	
@@ -58,7 +57,7 @@ public class TreeController {
 		//ModelAndView modelAndView = new ModelAndView("list-of-trees");
 	
 		System.out.println("jestem tutaj!");
-		model.addAttribute("Wszystkie dzia³y:", treeService.getTrees());
+		model.addAttribute("WszystkieDzialy:", treeService.getTrees());
 		//List<Tree> trees = treeService.getTrees();
 		//modelAndView.addObject("trees", trees);
 		return "jsonTemplate";
