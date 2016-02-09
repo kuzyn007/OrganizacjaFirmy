@@ -29,12 +29,6 @@ public class TreeController {
 		model.addAttribute("trees", trees);
 		model.addAttribute("tree", new Tree());
 		return "jsonTemplate";
-	//public ModelAndView addTreePage() {
-		//ModelAndView modelAndView = new ModelAndView("add-tree-form");
-		//List<Tree> trees = treeService.getTrees();
-		//modelAndView.addObject("trees", trees);
-		//modelAndView.addObject("tree", new Tree());
-		//return modelAndView;
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST, headers = {"Content-type=application/json"})
@@ -67,11 +61,6 @@ public class TreeController {
 	public String listOfTrees(Model model) {	
 		model.addAttribute("WszystkieDzialy:", treeService.getTrees());
 		return "jsonTemplate";
-	//public ModelAndView listOfTrees() {
-		//ModelAndView modelAndView = new ModelAndView("list-of-trees");
-		//List<Tree> trees = treeService.getTrees();
-		//modelAndView.addObject("trees", trees);
-		//return modelAndView;
 	}
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
@@ -79,11 +68,6 @@ public class TreeController {
 		Tree tree = treeService.getTree(id);
 		model.addAttribute("tree",tree);		
 		return "jsonTemplate";
-	//public ModelAndView editTreePage(@PathVariable Integer id) {
-		//ModelAndView modelAndView = new ModelAndView("edit-tree-form");
-		//Tree tree = treeService.getTree(id);
-		//modelAndView.addObject("tree",tree);		
-		//return modelAndView;
 	}
 
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.POST, headers = {"Content-type=application/json"})
@@ -99,43 +83,23 @@ public class TreeController {
         model.addAttribute("message", message);
         return "jsonTemplate";
     }
-	/*@RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
-	public ModelAndView edditingTree(@ModelAttribute Tree tree, @PathVariable Integer id) {
-		
-		ModelAndView modelAndView = new ModelAndView("home");
-		
-		treeService.updateTree(tree);
-		
-		String message = "Dzia³ zosta³ poprawnie zedytowany.";
-		modelAndView.addObject("message", message);
-		
-		return modelAndView;
-	}*/
 	
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	public String deleteTree(@PathVariable Integer id, Model model) {
-	//public ModelAndView deleteTree(@PathVariable Integer id) {
-		//ModelAndView modelAndView = new ModelAndView("home");
 		Tree treeToDelete = treeService.getTree(id);
 		if (treeToDelete == null) {
 			String message = "Dzia³ o id " + id + " nie istnieje";
 			model.addAttribute("message", message);
 			return "jsonTemplate";
-			//modelAndView.addObject("message", message);
-			//return modelAndView;
 		}
 		if (treeService.checkIfHaveChildren(id)) {
 			String message = "Dzial " + treeToDelete.getName() + " nie mo¿e zostaæ usuniêty, poniewa¿ ma poddzia³y.";
 			model.addAttribute("message", message);
 			return "jsonTemplate";
-			//modelAndView.addObject("message", message);
-			//return modelAndView;
 		}
 		treeService.deleteTree(id);
 		String message = "Dzia³ zosta³ poprawnie usuniêty.";
 		model.addAttribute("message", message);
 		return "jsonTemplate";
-		//modelAndView.addObject("message", message);
-		//return modelAndView;
 	}
 }
