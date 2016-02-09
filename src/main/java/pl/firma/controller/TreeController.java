@@ -3,13 +3,14 @@ package pl.firma.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 import pl.firma.model.Tree;
 import pl.firma.service.TreeService;
@@ -52,13 +53,16 @@ public class TreeController {
 	}
 	
 	@RequestMapping(value="/list")
-	public ModelAndView listOfTrees() {
-		ModelAndView modelAndView = new ModelAndView("list-of-trees");
-		
-		List<Tree> trees = treeService.getTrees();
-		modelAndView.addObject("trees", trees);
-		
-		return modelAndView;
+	//public ModelAndView listOfTrees() {
+	public String listOfTrees(Model model) {	
+		//ModelAndView modelAndView = new ModelAndView("list-of-trees");
+	
+		System.out.println("jestem tutaj!");
+		model.addAttribute("Wszystkie dzia³y:", treeService.getTrees());
+		//List<Tree> trees = treeService.getTrees();
+		//modelAndView.addObject("trees", trees);
+		return "jsonTemplate";
+		//return modelAndView;
 	}
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
@@ -105,5 +109,4 @@ public class TreeController {
 		modelAndView.addObject("message", message);
 		return modelAndView;
 	}
-
 }

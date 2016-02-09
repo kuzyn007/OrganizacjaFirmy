@@ -92,12 +92,6 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>1.3.1.RELEASE</version>
-		</dependency>
-
 		<!-- CGLIB is required to process @Configuration classes -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -130,6 +124,11 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.7.0</version>
 		</dependency>
 		<!-- Test -->
