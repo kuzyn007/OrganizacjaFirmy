@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.firma.model.Tree;
 import pl.firma.service.TreeService;
@@ -36,25 +37,30 @@ public class TreeController {
 		//return modelAndView;
 	}
 	
-	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public ModelAndView addingTree(@ModelAttribute Tree tree) {
-		
-		ModelAndView modelAndView = new ModelAndView("home");
+	@RequestMapping(value="/add", method=RequestMethod.POST, headers = {"Content-type=application/json"})
+	public String addingTree(@RequestBody Tree tree, Model model) {
+		if (tree == null || tree.getId() != null || tree.getLevel() != null || tree.getName()== null || tree.getNumberid() == null )
+        {
+            
+            String message = "Wrong JSON.";
+            model.addAttribute("message", message);
+            return "jsonTemplate";
+        }
 		int idDoSprawdzenia = tree.getNumberid();
 		Tree treeParent = treeService.getTree(idDoSprawdzenia);
 		if (treeParent == null) {
 			String message = "Podany ID rodzica nie istnieje.";
-			modelAndView.addObject("message", message);
+			model.addAttribute("message", message);
 			
-			return modelAndView;
+			return "jsonTemplate";
 		}
 		tree.setLevel(treeParent.getLevel() + 1);
 		treeService.addTree(tree);
 		
 		String message = "Dzia³ zosta³ poprawnie dodany.";
-		modelAndView.addObject("message", message);
+		model.addAttribute("message", message);
 		
-		return modelAndView;
+		return "jsonTemplate";
 	}
 	
 	@RequestMapping(value="/list")
@@ -79,10 +85,19 @@ public class TreeController {
 		//modelAndView.addObject("tree",tree);		
 		//return modelAndView;
 	}
-	@RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
-    public void edditingTree(@RequestBody Tree tree, @PathVariable Integer id) {
-        treeService.updateTree(tree);
-        return;
+
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.POST, headers = {"Content-type=application/json"})
+    public String edditingTree(@RequestBody Tree tree, @PathVariable Integer id, Model model) {
+		if (tree == null || tree.getId() == null || tree.getLevel() == null || tree.getName()== null || tree.getNumberid() == null )
+        {
+            String message = "Wrong JSON.";
+            model.addAttribute("message", message);
+            return "jsonTemplate";
+        }
+		treeService.updateTree(tree);
+        String message = "Dzia³ zosta³ poprawnie zedytowany.";
+        model.addAttribute("message", message);
+        return "jsonTemplate";
     }
 	/*@RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
 	public ModelAndView edditingTree(@ModelAttribute Tree tree, @PathVariable Integer id) {
